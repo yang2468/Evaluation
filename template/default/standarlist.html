@@ -1,0 +1,45 @@
+<html><head></head><body>{include file=comm/head.html}
+
+    <!--main Start!-->
+    <div id="main" class="wp clearfix">
+        <div class="leftMenu fl">
+            <dl>
+                <dt>
+                    <span>
+                        <h4>{sort:name}</h4>
+                        <h5>{sort:subname}</h5>
+                    </span>
+                </dt>
+                {pboot:select field=ext_standard_field}
+                <dd class="{pboot:if('[select:value]'=='[select:current]')}{/pboot:if}">
+                    <a href="[select:link]">[select:value]</a>
+                </dd>
+                {/pboot:select}
+            </dl>
+        </div>
+        <div class="rightCon fr">
+            <div class="conTop clearfix">
+                <div class="crumbs">
+                    <a href="index.html">{pboot:position separator='-'}</a>
+                </div>
+                <div class="conTit clearfix">
+                    <span>{sort:name}</span>
+                </div>
+            </div>
+            <div class="conMain">
+                <ul class="newsList">
+                    {pboot:list num=1 order=sorting}
+                    <li class="clearfix">
+                        <a href="[list:link]">[list:title]</a>
+                        <span>2017-12-12</span>
+                    </li>
+                    {/pboot:list}
+    
+                </ul>
+                {include file=comm/page.html}
+            </div>
+        </div>
+    </div>
+    <!--main End!-->
+    
+    {include file=comm/foot.html}</body></html>

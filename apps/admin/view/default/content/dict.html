@@ -1,0 +1,154 @@
+{include file='common/head.html'}
+
+<div class="layui-body">
+	{if([$list])}
+	<div class="layui-tab layui-tab-brief" lay-filter="tab">
+		<ul class="layui-tab-title">
+			<li class="layui-this" lay-id="t1">评测项目列表</li>
+			<li lay-id="t2">新增评测项目</li>
+		</ul>
+		<div class="layui-tab-content">
+			<div class="layui-tab-item layui-show">
+				<table class="layui-table" id="menuTable">
+					<thead>
+						<tr>
+							<th>序号</th>
+							<th>项目名称</th>
+							<th>报名起止</th>
+							<th>提交起止</th>
+							<th>创建人/更新人</th>
+							<th>状态</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						{foreach $dicts(key,value)}
+						<tr>
+							<td>[value->Id]</td>
+							<td>[value->name]</td>
+							<td>开始：[value->enroll_start]<br>结束：[value->enroll_end]</td>
+							<td>开始：[value->upload_start]<br>结束：[value->upload_end]</td>
+							<td>[value->create_user]/[value->update_user]</td>
+							<td>
+								{if($value->status)}
+		                            <a href="{url./admin/'.C.'/mod/Id/'.$value->Id.'/field/status/value/0}"><i class='fa fa-toggle-on' title="点击禁用"></i></a>
+		                            {else}
+		                            <a href="{url./admin/'.C.'/mod/Id/'.$value->Id.'/field/status/value/1}"><i class='fa fa-toggle-off' title="点击启用"></i></a>
+		                            {/if}
+							</td>
+							<td>
+								{fun=get_btn_del($value->Id,'Id')}
+								{fun=get_btn_mod($value->Id,'Id')}
+							</td>
+						</tr>
+						{/foreach}
+					</tbody>
+				</table>
+			    <div class="page">{$pagebar}</div>
+			</div>
+			<div class="layui-tab-item">
+				<form action="{url./admin/Dict/add}" method="post" class="layui-form">
+					<input type="hidden" name="formcheck" value="{$formcheck}" > 
+					
+	                <div class="layui-form-item">
+	                     <label class="layui-form-label">项目名称</label>
+	                     <div class="layui-input-block">
+	                     	<input type="text" name="name" required  lay-verify="required" placeholder="请输入项目名称" class="layui-input">
+	                     </div>
+					</div>
+					<div class="layui-form-item">
+						
+						<label class="layui-form-label">报名起止时间</label>
+						<div class="layui-input-inline">
+							<input type="text" name="enroll_start" required  lay-verify="required" value="" readonly placeholder="请选择报名开始时间"  class="layui-input datetime">
+							
+						</div>
+						<div class="layui-input-inline">
+							<input type="text" name="enroll_end" required  lay-verify="required" value="" readonly placeholder="请选择报名结束时间"  class="layui-input datetime">
+							
+						</div>
+						
+				   </div>
+				   <div class="layui-form-item">
+					<label class="layui-form-label">提交材料时间</label>
+					<div class="layui-input-inline">
+						<input type="text" name="upload_start" required  lay-verify="required" value="" readonly placeholder="请选择提交材料开始时间"  class="layui-input datetime">
+						
+					</div>
+					<div class="layui-input-inline">
+						<input type="text" name="upload_end" required  lay-verify="required" value="" readonly placeholder="请选择提交材料结束时间"  class="layui-input datetime">
+						
+					</div>
+					</div>
+					
+	                
+	                 <div class="layui-form-item">
+						 <div class="layui-input-block">
+						    <button class="layui-btn" lay-submit>立即提交</button>
+						    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+						 </div>
+					</div>
+				</form>
+				
+		    </div>
+	  </div>
+	</div>  
+	{/if}
+	
+	{if([$mod])}
+	
+	<div class="layui-tab layui-tab-brief" lay-filter="tab">
+	  <ul class="layui-tab-title">
+	    <li class="layui-this">项目类型修改</li>
+	  </ul>
+	  <div class="layui-tab-content">
+	  	<div class="layui-tab-item layui-show">
+	  	 <form action="{url./admin/Dict/mod/Id/'.[$get.Id].'}{$backurl}" method="post" class="layui-form">
+	  	 	  <input type="hidden" name="formcheck" value="{$formcheck}" > 
+	  	
+				 <div class="layui-form-item">
+					<label class="layui-form-label">项目名称</label>
+					<div class="layui-input-block">
+						<input type="text" name="name" required  lay-verify="required" placeholder="请输入项目名称" class="layui-input" value="{$dict->name}">
+					</div>
+			   </div>
+			   <div class="layui-form-item">
+				   
+				   <label class="layui-form-label">报名起止时间</label>
+				   <div class="layui-input-inline">
+					   <input type="text" name="enroll_start" required  lay-verify="required" value="{$dict->enroll_start}" readonly placeholder="请选择报名开始时间"  class="layui-input datetime">
+					   
+				   </div>
+				   <div class="layui-input-inline">
+					   <input type="text" name="enroll_end" required  lay-verify="required" value="{$dict->enroll_end}" readonly placeholder="请选择报名结束时间"  class="layui-input datetime">
+					   
+				   </div>
+				   
+			  </div>
+			  <div class="layui-form-item">
+			   <label class="layui-form-label">提交材料时间</label>
+			   <div class="layui-input-inline">
+				   <input type="text" name="upload_start" required  lay-verify="required" value="{$dict->upload_start}" readonly placeholder="请选择提交材料开始时间"  class="layui-input datetime">
+				   
+			   </div>
+			   <div class="layui-input-inline">
+				   <input type="text" name="upload_end" required  lay-verify="required" value="{$dict->upload_end}" readonly placeholder="请选择提交材料结束时间"  class="layui-input datetime">
+				   
+			   </div>
+			   </div>
+                <div class="layui-form-item">
+				 <div class="layui-input-block">
+				    <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+				    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+				    {fun=get_btn_back()}
+				 </div>
+			   </div>
+	  	 </form>
+	  	 </div>
+	  </div>
+	</div> 
+	{/if} 
+	
+</div>
+
+{include file='common/foot.html'}

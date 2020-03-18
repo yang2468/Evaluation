@@ -1,0 +1,125 @@
+{include file=comm/head.html}
+
+{include file=comm/top.html}
+
+<div class="container pages">
+
+
+	<div class="row">
+		<!-- 垂直导航栏开始 -->
+		<div class="col-sm-4 col-md-6 col-lg-4 col-xl-2 ">
+			<div class="sonsort mt-4 mb-2">
+				<nav class="menu">
+					<ul>
+						{pboot:nav}
+
+						<ul class="sub-menu">
+							{pboot:2nav parent=[nav:scode]}
+							<li >
+								<a href="#[2nav:name]" style="width:180px" class="nav-header  btn btn-info mb-2"
+									data-toggle="collapse">[2nav:name] <span
+										class="badge badge-light">[2nav:rows]</span><span
+										class="pull-right glyphicon glyphicon-chevron-down"></span></a>
+
+								<ul class="nav nav-list  secondmenu open" id="[2nav:name]">
+									{pboot:3nav parent=[2nav:scode]}
+									<li class="nav-item dropdown open {pboot:if('[nav:scode]'=='{sort:tcode}')}active{/pboot:if}" >
+										<a href="[3nav:link]" style="width:180px" class="btn btn-light mb-2">[3nav:name]
+											<span class="badge badge-light">[3nav:rows]</span></a>
+									</li>
+									{/pboot:3nav}
+								</ul>
+							</li>
+							{/pboot:2nav}
+						</ul>
+						</li>
+						{/pboot:nav}
+
+					</ul>
+				</nav>
+			</div>
+
+		</div>
+		<!-- 垂直导航栏结束 -->
+		
+		<div class="col-sm-8 col-md-6 col-lg-8 col-xl-10 ">
+			<div class="my-3">
+				<!-- 搜索栏开始-->
+				<div class="row">
+					<form class="form-inline mb-5 justify-content-center" action="{pboot:scaction}" method="get"
+						style="width:100%">
+						<div class="form-group mx-sm-3 mb-2" style="width:80%">
+							<input type="text" name="keyword" class="form-control " style="width:100%"
+								placeholder="请输入关键字">
+						</div>
+						<button type="submit" class="btn btn-info mb-2">搜索</button>
+					</form>
+				</div>
+				<!-- 搜索栏结束-->
+				<!-- 产品列表开始-->
+				{pboot:list num=8 order=sorting }
+				<div class="row wow zoomIn" data-wow-delay="[list:i]00ms" data-wow-duration="1s">
+					<div class="col-2 col-sm-2 col-md-2">
+						<div class="nav flex-column justify-content-center  text-center text-success"
+							style="height:200px;">
+							<a href="[list:link]"><img src="[list:ico]" class="img-fluid img-responsive center-block"
+									alt="[list:title]"></a>
+						</div>
+					</div>
+					<div class="col-10 col-sm-10 col-md-10">
+						<div class="text-secondary my-3 border-bottom-dashed lh-3" >
+							<div class="row">
+								<div class="col-6 col-sm-8 col-md-9">
+									<p style="display: flex; align-items: center;"><a href="[list:link]">产品名称：[list:ext_productName lencn=20]</a></p>
+									<p style="display: flex; align-items: center;"><a href="[list:link]">企业名称：[list:ext_companyName lencn=20]</a></p>
+									<p style="display: flex; align-items: center;"><a href="[list:link]">产品评测：[list:ext_productMark lencn=20]</a></p>
+									<p class="d-none d-md-inline" style="display: flex; align-items: center;"><a href="[list:link]">产品简介：[list:ext_productBrief drophtml=1 dropblank=1 lencn=50]</a></p>
+									
+								</div>
+								<div class="col-6 col-sm-4 col-md-3">
+								{pboot:if([list:scode]=='27')}
+									<p style="display: flex; align-items: center;"><img
+											src="./static/images/bushutaitao.png" class="img-fluid"
+											style="width: 20px; margin-right: 8px;"
+											alt="Chania">部署台套：[list:ext_deployCount lencn=12] </p>
+									<p style="display: flex; align-items: center;"><img
+											src="./static/images/hujiaozongshu.png" class="img-fluid"
+											style="width: 20px; margin-right: 8px;"
+											alt="Chania">呼叫总数：[list:ext_callCount lencn=12] </p>
+									<p style="display: flex; align-items: center;"><img
+											src="./static/images/jietongshu.png" class="img-fluid"
+											style="width: 20px; margin-right: 8px;"
+											alt="Chania">接通数：[list:ext_answerCount lencn=12]</p>
+									<p style="display: flex; align-items: center;"><img
+											src="./static/images/pingjunmeitianhujiao.png" class="img-fluid"
+											style="width: 20px; margin-right: 8px;"
+											alt="Chania">平均每天呼叫：[list:ext_answerAver lencn=12]</p>
+								{/pboot:if}
+								</div>
+							</div>
+						</div>
+
+
+					</div>
+
+
+
+				</div>
+
+				{/pboot:list}
+				<!-- 产品列表结束-->
+
+
+			</div>
+
+
+
+
+			{include file=comm/page.html}
+		</div>
+	</div>
+
+
+</div>
+
+{include file=comm/foot.html}

@@ -1,0 +1,80 @@
+{include file=comm/head.html}
+
+<!--main Start!-->
+<div id="main" class="wp clearfix">
+	<div class="leftMenu fl">
+		<dl>
+			<dt>
+				<span>
+					<h4>{sort:name}</h4>
+					<h5>{sort:subname}</h5>
+				</span>
+			</dt>
+				{pboot:nav}
+                
+					{pboot:2nav parent=[nav:scode]}
+					<dd class="mather">
+						{pboot:if('[nav:scode]'==20)}
+						<a href="[2nav:link]" >[2nav:name]<span class="badge_2nav">[2nav:rows]</span></a>
+							{pboot:3nav parent=[2nav:scode]}
+							<dd>
+								<a href="[3nav:link]">[3nav:name]<span class="badge_3nav">[3nav:rows]</span></a>
+							</dd>
+							{/pboot:3nav}
+						{/pboot:if}
+					</dd>
+					{/pboot:2nav}
+				{/pboot:nav}
+		</dl>
+	</div>
+	<div class="rightCon fr">
+		<div class="conTop clearfix">
+			<div class="crumbs">
+				<a href="index.html">{pboot:position separator='-'}</a>
+			</div>
+			<div class="conTit clearfix">
+				<span>{sort:name}</span>
+			</div>
+		</div>
+	
+		<div class="news_left">
+			<ul>
+				{pboot:list num=10 order=sorting}	
+				<li>
+					<a href="[list:link]" class="product_img_box"><img src="[list:ico]" class="product_pic" alt="[list:title]" /></a>
+					<div class="fontss">
+						{pboot:if([list:scode]=='31')}
+						<h5><strong><a href="[list:link]">[list:title]</a></strong></h5>
+						<p class="one">产品名称：[list:ext_product_name]</p>
+						<p class="one">企业名称：[list:ext_Enterprise_name]</p>
+						<p class="one">产品评测：[list:ext_Product_evaluation]</p>
+						<p class="one">产品简介：[list:ext_product_brie]</p>
+						{/pboot:if}
+					</div>
+					<div class="message">
+						{pboot:if([list:scode]=='31')}
+							<p class="message1"><img src="./static/images/bushutaitao.png" class="messageimg">部署台套：[list:ext_deployCount lencn=12] </p>
+							<p class="message1"><img src="./static/images/hujiaozongshu.png" class="messageimg">呼叫总数：[list:ext_callCount lencn=12] </p>
+							<p class="message1"><img src="./static/images/jietongshu.png" class="messageimg">接通数：[list:ext_answerCount lencn=12]</p>
+							<p class="message1"><img src="./static/images/pingjunmeitianhujiao.png" class="messageimg">平均每天呼叫：[list:ext_answerAver lencn=12]</p>
+						{/pboot:if}
+						</div>
+					<div class="fonts">
+						{pboot:if([list:scode]!='31')}
+						<h5><strong><a href="[list:link]">[list:title]</a></strong></h5>
+						<p class="one">产品名称：[list:ext_product_name]</p>
+						<p class="one">企业名称：[list:ext_Enterprise_name]</p>
+						<p class="one">产品评测：[list:ext_Product_evaluation]</p>
+						<p class="one">产品简介：[list:ext_product_brie]</p>
+						{/pboot:if}
+					</div>
+				</li>
+				{/pboot:list}
+			</ul>
+			{include file=comm/page.html}
+		</div>
+	</div>
+</div>
+<!--main End!-->
+
+{include file=comm/foot.html}

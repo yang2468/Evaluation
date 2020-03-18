@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="zh">
+
+<head>
+	<meta charset="utf-8">
+	<title>{pboot:pagetitle}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" type="text/css" href="{pboot:sitetplpath}/css/reset.css" />
+	<link rel="stylesheet" type="text/css" href="{pboot:sitetplpath}/css/style.css" />
+	<script src="{pboot:sitetplpath}/js/jquery.min.js"></script>
+	<style type="text/css">
+.ailogo{
+    font: bold 35px/1.5 '微软雅黑';
+    color: dodgerblue;
+		/*文本阴影*/
+    text-shadow: #000 2px 3px 6px;
+    /*text-shadow: 10px 10px 50px #000,-10px -10px 50px #f00;*/
+}  
+</style>
+</head>
+</head>
+<script>
+	function jumpToUserCenter() {
+		if ('{$session.realname}' == '') {
+			showLoginDialog();
+		} else {
+			window.location.href = "/?usercenter/";
+		}
+	}
+</script>
+
+
+<script type="text/javascript">
+	function g(id) {
+		return document.getElementById(id);
+	}
+	// 打开登陆弹框
+	function showLoginDialog() {
+		g('forgetDialog').style.display = 'none';
+		g('registerDialog').style.display = 'none';
+		g('loginDialog').style.display = 'block';
+		g('mask').style.display = 'block';
+	}
+
+	//	关闭登陆弹框
+	function hideLoginDialog() {
+		g('loginDialog').style.display = 'none';
+		g('mask').style.display = 'none';
+	}
+
+	// 打开注册弹框
+	function showRegisterDialog() {
+		g('forgetDialog').style.display = 'none';
+		g('loginDialog').style.display = 'none';
+		g('registerDialog').style.display = 'block';
+		g('mask').style.display = 'block';
+	}
+
+	//	关闭注册弹框
+	function hideRegisterDialog() {
+		g('registerDialog').style.display = 'none';
+		g('mask').style.display = 'none';
+	}
+
+	// 打开忘记密码弹框
+	function showForgetDialog() {
+		g('registerDialog').style.display = 'none';
+		g('loginDialog').style.display = 'none';
+		g('forgetDialog').style.display = 'block';
+		g('mask').style.display = 'block';
+	}
+
+	//	关闭忘记密码弹框
+	function hideForgetDialog() {
+		g('forgetDialog').style.display = 'none';
+		g('mask').style.display = 'none';
+	}
+	function login() {
+		$.ajax({
+			//几个参数需要注意一下
+			type: "POST",//方法类型
+			dataType: "json",//预期服务器返回的数据类型
+			url: '{url./home/Index/login}',//url
+			data: $('#loginForm').serialize(),
+			success: function (result) {
+				console.log(result);//打印服务端返回的数据(调试用)
+				if (result.code == 1) {
+					alert("登陆成功！");
+					hideLoginDialog();
+					location.reload()
+				} else {
+					alert(result.data);
+				}
+			},
+			error: function () {
+				alert("登陆失败！");
+			}
+		});
+	}
+	function register() {
+		$.ajax({
+			//几个参数需要注意一下
+			type: "POST",//方法类型
+			dataType: "json",//预期服务器返回的数据类型
+			url: '{url./home/Index/register}',//url
+			data: $('#registerForm').serialize(),
+			success: function (result) {
+				console.log(result);//打印服务端返回的数据(调试用)
+				if (result.code == 1) {
+					alert("注册成功！");
+					hideRegisterDialog();
+					location.reload()
+				} else {
+					alert(result.data);
+				}
+			},
+			error: function () {
+				alert("注册失败！");
+			}
+		});
+	}
+	function forget() {
+		$.ajax({
+			//几个参数需要注意一下
+			type: "POST",//方法类型
+			dataType: "json",//预期服务器返回的数据类型
+			url: '{url./home/Index/forget}',//url
+			data: $('#forgetForm').serialize(),
+			success: function (result) {
+				console.log(result);//打印服务端返回的数据(调试用)
+				if (result.code == 1) {
+					alert("找回密码成功！");
+					hideForgetDialog();
+					location.reload()
+				} else {
+					alert(result.data);
+				}
+			},
+			error: function () {
+				alert("找回密码失败！");
+			}
+		});
+	}
+	function postVeCode() {
+		if (i == 60) {
+			$.ajax({
+				//几个参数需要注意一下
+				type: "POST",//方法类型
+				dataType: "json",//预期服务器返回的数据类型
+				url: '{url./home/Index/postVeCode}',//url
+				data: $('#registerForm').serialize(),
+				success: function (result) {
+					console.log(result);//打印服务端返回的数据(调试用)
+					if (result.code == 1) {
+						alert("发送验证码成功！");
+						countDown();
+					} else {
+						alert(result.data);
+					}
+				},
+				error: function () {
+					alert("发送验证码失败！");
+				}
+			});
+		} else {
+			alert(i + "秒后可以重新发送！");
+		}
+	}
+
+	var flag = 1;
+	var i = 60;
+	function countDown() {
+		i = i - 1;
+		$(".ui-dialog-submit-vscode").attr("value", i + "秒");
+		if (i == 0) {
+			$(".ui-dialog-submit-vscode").attr("value", "重新发送");
+			flag = 1;
+			i = 60;
+			return;
+		}
+		setTimeout('countDown()', 1000);
+	}
+
+
+	function postForgetVeCode() {
+		if (i == 60) {
+			$.ajax({
+				//几个参数需要注意一下
+				type: "POST",//方法类型
+				dataType: "json",//预期服务器返回的数据类型
+				url: '{url./home/Index/postVeCode}',//url
+				data: $('#forgetForm').serialize(),
+				success: function (result) {
+					console.log(result);//打印服务端返回的数据(调试用)
+					if (result.code == 1) {
+						alert("发送验证码成功！");
+						countDownforget();
+					} else {
+						alert(result.data);
+					}
+				},
+				error: function () {
+					alert("发送验证码失败！");
+				}
+			});
+		} else {
+			alert(i + "秒后可以重新发送！");
+		}
+	}
+
+	var flagforget = 1;
+	var iforget = 60;
+	function countDownforget() {
+		iforget = iforget - 1;
+		$(".ui-dialog-submit-vscode").attr("value", iforget + "秒");
+		if (iforget == 0) {
+			$(".ui-dialog-submit-forgetvscode").attr("value", "重新发送");
+			flagforget = 1;
+			iforget = 60;
+			return;
+		}
+		setTimeout('countDownforget()', 1000);
+	}
+
+	function loginOut() {
+		$.ajax({
+			//几个参数需要注意一下
+			type: "POST",//方法类型
+			dataType: "json",//预期服务器返回的数据类型
+			url: '{url./home/Index/loginOut}',//url
+			data: '',
+			success: function (result) {
+				console.log(result);//打印服务端返回的数据(调试用)
+				if (result.code == 1) {
+					alert("用户退出成功！");
+					location.reload()
+				} else {
+					alert(result.data);
+				}
+			},
+			error: function () {
+				alert("用户退出失败！");
+			}
+		});
+	}
+</script>
+
+<body class="bodyBg">
+
+	<!--背景遮盖 Start!-->
+	<div class="ui-mask" id="mask" onselectstart="return false"></div>
+	<!--背景遮盖 End!-->
+	<!--登陆弹框 Start!-->
+	<div class="ui-dialog" id="loginDialog" onselectstart='return false;'>
+		<div class="ui-dialog-title" id="dialogDrag" onselectstart="return false;">
+			登录通行证
+			<a class="ui-dialog-closebutton" href="javascript:hideLoginDialog();"></a>
+		</div>
+		<form id="loginForm" οnsubmit="return false" action="##" method="post" class="ui-dialog-content">
+			<div class="ui-dialog-content">
+				<div class="ui-dialog-l40 ui-dialog-pt15">
+					<input class="ui-dialog-input ui-dialog-input-username" type="input" placeholder="手机"
+						name="username" />
+				</div>
+				<div class="ui-dialog-l40 ui-dialog-pt15">
+					<input class="ui-dialog-input ui-dialog-input-password" type="input" placeholder="密码"
+						name="password" />
+				</div>
+				<div class="ui-dialog-l40">
+					<a href="javascript:showForgetDialog();">忘记密码</a>
+				</div>
+				<div>
+					<input class="ui-dialog-submit" type="button" value="登录" onClick="login()" />
+				</div>
+				<div class="ui-dialog-l40">
+					<a href="javascript:showRegisterDialog();">立即注册</a>
+				</div>
+			</div>
+		</form>
+		<iframe id="form_iframe" name="form_iframe" style="display:none;"></iframe>
+	</div>
+	<!--登陆弹框 End!-->
+	<!--立即注册弹框 Start!-->
+	<div class="ui-dialog" id="registerDialog" onselectstart='return false;'>
+		<div class="ui-dialog-title" id="dialogDrag" onselectstart="return false;">
+			欢迎注册帐户
+			<a class="ui-dialog-closebutton" href="javascript:hideRegisterDialog();"></a>
+		</div>
+		<form id="registerForm" οnsubmit="return false" action="##" method="post" class="ui-dialog-content">
+			<div class="ui-dialog-content">
+				<div class="ui-dialog-l40 ui-dialog-pt15">
+					<input class="ui-dialog-input ui-dialog-input-username" type="input" placeholder="手机"
+						name="phonenum" />
+				</div>
+				<div class="ui-dialog-l40 ui-dialog-pt15" style="display: flex;flex-direction: row;">
+					<input class="ui-dialog-input ui-dialog-input-vscode" type="input" placeholder="验证码"
+						name="vscode" />
+					<input class="ui-dialog-submit ui-dialog-submit-vscode" type="button" value="发送验证码"
+						onClick="postVeCode()" />
+				</div>
+				<div class="ui-dialog-l40 ui-dialog-pt15">
+					<input class="ui-dialog-input ui-dialog-input-password" type="input" placeholder="密码"
+						name="password" />
+				</div>
+				<div>
+					<input class="ui-dialog-submit" type="button" value="立即注册" onClick="register()" style="margin-top: 15px;"/>
+				</div>
+
+				<div class="ui-dialog-l40">
+					<a href="javascript:showLoginDialog();">已有帐户，立即登陆</a>
+				</div>
+			</div>
+		</form>
+		<iframe id="form_iframe" name="form_iframe" style="display:none;"></iframe>
+	</div>
+	<!--立即注册弹框 End!-->
+	<!--找回帐户弹框 Start!-->
+	<div class="ui-dialog" id="forgetDialog" onselectstart='return false;'>
+		<div class="ui-dialog-title" id="dialogDrag" onselectstart="return false;">
+			欢迎找回帐户
+			<a class="ui-dialog-closebutton" href="javascript:hideForgetDialog();"></a>
+		</div>
+		<form id="forgetForm" οnsubmit="return false" action="##" method="post" class="ui-dialog-content">
+			<div class="ui-dialog-content">
+				<div class="ui-dialog-l40 ui-dialog-pt15">
+					<input class="ui-dialog-input ui-dialog-input-username" type="input" placeholder="手机"
+						name="phonenum" />
+				</div>
+				<div class="ui-dialog-l40 ui-dialog-pt15" style="display: flex;flex-direction: row;">
+					<input class="ui-dialog-input ui-dialog-input-vscode" type="input" placeholder="验证码"
+						name="vscode" />
+					<input class="ui-dialog-submit ui-dialog-submit-forgetvscode" type="button" value="发送验证码"
+						onClick="postForgetVeCode()" />
+				</div>
+				<div class="ui-dialog-l40 ui-dialog-pt15">
+					<input class="ui-dialog-input ui-dialog-input-password" type="input" placeholder="新密码"
+						name="password" />
+				</div>
+				<div>
+					<input class="ui-dialog-submit" type="button" value="立即找回" onClick="forget()" style="margin-top: 15px;"/>
+				</div>
+				<div class="ui-dialog-l40">
+					<a href="javascript:showRegisterDialog();">立即注册</a>
+				</div>
+			</div>
+		</form>
+		<iframe id="form_iframe" name="form_iframe" style="display:none;"></iframe>
+	</div>
+	<!--找回帐户弹框 End!-->
+	<!--头部 Start!-->
+	<div class="wp clearfix">
+	
+	<div class="hdLogin fr" >
+			
+			<p >
+				{pboot:if('{$session.realname}'=='')}
+				<div class="hdLogin fr" onclick="jumpToUserCenter()">
+				未登录，点此登录
+			  </div>
+				{else}
+				欢迎您!，{$session.realname}
+				<a href="javascript:loginOut()">退出</a>
+				<!-- <a href="{pboot:sitepath}/admin.php?p=/Index/loginOut">注销</a> -->
+				{/pboot:if}
+				
+			</p>
+		</div>
+	</div>
+	
+	<div id="hd" class="wp clearfix">
+		<center>
+			<div class="ailogo">人工智能关键技术和应用评测工业和信息化部重点实验室
+				
+				</div>
+	      
+	    </center>
+
+		
+	</div>
+	<!--头部 End!-->
+
+
+	<!--导航 Start!-->
+	<ul id="nav" class="clearfix wp">
+		{pboot:nav num=10 parent=0}
+		<li class="first {pboot:if('[nav:scode]'=='{sort:tcode}')}active{/pboot:if}">
+			<a href="[nav:link]" class="navItem">[nav:name]</a>
+			<div class="dropdown">
+				{pboot:2nav parent=[nav:scode]}
+				<a href="[2nav:link]">[2nav:name]</a>
+				{/pboot:2nav}
+			</div>
+		</li>
+		{/pboot:nav}
+	</ul>
+	<!--导航 End!-->

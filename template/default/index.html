@@ -1,0 +1,396 @@
+{include file=comm/head.html}
+<!--main Start!-->
+<div id="main" class="wp">
+	<div class="container clearfix">
+		<!--新闻动态-->
+		<div class="item col4">
+			<div class="itemTit">
+				<h3>新闻中心</h3>
+				<a href="#" class="itemMore">MORE+</a>
+			</div>
+			<div class="itemCon indexNews clearfix">
+				<div class="focus fl">
+						<ul>
+						{pboot:list scode=2 num=4 order=date  isico=1}
+						<li>
+							<img src="[list:ico]"/>
+								<div class="focusText">
+										<a href="[list:link]">[list:title lencn=20]</a>
+								</div>
+							
+							
+						</li>
+						{/pboot:list}
+							
+						</ul>
+						<div class="dots"></div>
+					</div>
+				<div class="textNews fr">
+					{pboot:list scode=2 num=1 order=date start=1}
+					<div class="headline">
+						<h3>[list:title lencn=20]</h3>
+						<p>[list:content drophtml=1 dropblank=1 lencn=60] <a href="[list:link]" class="dc">[详细]</a></p>
+					</div>
+					{/pboot:list}
+					<ul>
+						
+						{pboot:list scode=2 num=4 order=date start=2}
+						<li>
+
+							<div class="clearfix">
+								<a href="[list:link]">[list:title lencn=20]</a>
+								<span>[list:date style=m-d]</span>
+							</div>
+							
+						</li>
+						{/pboot:list}
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<!--通知公告-->
+		<div class="item col2">
+			<div class="itemTit">
+				<h3>会议通知</h3>
+				<a href="#" class="itemMore">MORE+</a>
+			</div>
+			<div class="itemCon notice">
+				<ul class="listStyle">
+					{pboot:list scode=12 num=8 order=date}
+						<li>
+
+							<div class="clearfix">
+								<a href="[list:link]">[list:title lencn=16]</a>
+								<span>[list:date style=m-d]</span>
+							</div>
+							
+						</li>
+						{/pboot:list}
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div class="container clearfix">
+		<!--平台简介-->
+		<div class="item col2">
+			<div class="itemTit icoIntro">
+				<h3>平台简介</h3>
+				<a href="#" class="itemMore">MORE+</a>
+			</div>
+			<div class="itemCon indexIntro">
+				<p>
+					{pboot:content id=47}
+					 [content:content drophtml=1 dropblank=1 len=248 more='']
+					{/pboot:content}
+				</p>
+				
+			</div>
+		</div>
+
+		<!--AI产品库-->
+		<div class="item col4">
+			<div class="itemTit icoPlat">
+				<h3>AI产品库</h3>
+				<a href="#" class="itemMore">MORE+</a>
+			</div>
+			<div class="itemCon platform">
+				<ul class="list1 clearfix">
+					<li>
+					{pboot:nav parent=20} 
+					{pboot:if('[nav:scode]'==22)}	
+						<a class="green" href="#">
+							<h3>抗疫专区</h3>
+							<h5>产品数量：[nav:rows]</h5>
+						</a>
+					</li>
+					{/pboot:if}
+					{/pboot:nav} 
+					{pboot:nav parent=22} 
+					<li>
+					
+					
+						<a class="green" href="#">
+							<h3>[nav:name]</h3>
+							<h5>产品数量：[nav:rows]</h5>
+						</a>
+					</li>
+					{/pboot:nav}  
+					
+				</ul>
+				<ul class="list1 clearfix">
+					<li>
+					{pboot:nav parent=20} 
+					{pboot:if('[nav:scode]'==23)}
+						<a class="yellow" href="#">
+							<h3>服务平台</h3>
+							<h5>产品数量：[nav:rows]</h5>
+						</a>
+					</li>
+					{/pboot:if}
+					{/pboot:nav} 
+					{pboot:nav parent=23} 
+					<li>
+						
+						<a class="yellow" href="#">
+							<h3>[nav:name]</h3>
+							<h5>产品数量：[nav:rows]</h5>
+						</a>
+					</li>
+					{/pboot:nav}  
+					
+				</ul>
+				<ul class="list1 clearfix">
+					{pboot:nav parent=20} 
+					{pboot:if('[nav:scode]'==24)}
+					<li>
+						
+						<a class="blue" href="#">
+							<h3>智能终端</h3>
+							<h5>产品数量：[nav:rows]</h5>
+						</a>
+					</li>
+					{/pboot:if}
+					{/pboot:nav} 
+					{pboot:nav parent=24} 
+					<li>
+						
+						<a class="blue" href="#">
+							<h3>[nav:name]</h3>
+							<h5>产品数量：[nav:rows]</h5>
+						</a>
+					</li>
+					{/pboot:nav}  
+					
+				</ul>
+				<ul class="list1 clearfix">
+					{pboot:nav parent=20} 
+					{pboot:if('[nav:scode]'==25)}
+					<li>
+						
+						<a class="green" href="#">
+							<h3>基础设施</h3>
+							<h5>产品数量：[nav:rows]</h5>
+						</a>
+					</li>
+					{/pboot:if}
+					{/pboot:nav} 
+					{pboot:nav parent=25} 
+					<li>
+						
+						<a class="green" href="#">
+							<h3>[nav:name]</h3>
+							<h5>产品数量：[nav:rows]</h5>
+						</a>
+					</li>
+					{/pboot:nav}  
+					
+				</ul>
+			
+				
+			</div>
+		</div>
+	</div>
+
+	<div class="container clearfix">
+		<!--评测结果-->
+		<div class="item col6">
+			<div class="itemTit icoEqu">
+				<h3>评测结果</h3>
+				<a href="#" class="itemMore">MORE+</a>
+			</div>
+			<div class="itemCon equWp">
+				<div class="equipment">
+					<ul>
+						{pboot:list scode=37 num=12 order=date}
+						<li><a href="[list:link]">
+								<div class="imgWp">
+									<span><img src="[list:ico]"></span>
+								</div>
+								<p>[list:title]</p>
+							</a></li>
+							{/pboot:list}
+						
+					</ul>
+					<div class="equPrev"><span></span></div>
+					<div class="equNext"><span></span></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container clearfix">
+		<!--评估规范-->
+		<div class="item col3">
+			<div class="itemTit">
+				<h3>评估规范</h3>
+				<a href="#" class="itemMore">MORE+</a>
+			</div>
+			<div class="itemCon rules">
+				<ul class="listStyle">
+					{pboot:list scode=19 num=6 order=date}
+						<li>
+
+							<div class="clearfix">
+								<a href="[list:link]">[list:title lencn=16]</a>
+								<span>[list:date style=m-d]</span>
+							</div>
+							
+						</li>
+						{/pboot:list}
+				</ul>
+			</div>
+		</div>
+
+		<!--深度评测-->
+		<div class="item col3">
+			<div class="itemTit">
+				<h3>深度评测</h3>
+				<a href="#" class="itemMore">MORE+</a>
+			</div>
+			<div class="itemCon exchange">
+				<ul class="listStyle">
+					{pboot:list scode=21 num=6 order=date}
+						<li>
+
+							<div class="clearfix">
+								<a href="[list:link]">[list:title lencn=16]</a>
+								<span>[list:date style=m-d]</span>
+							</div>
+							
+						</li>
+						{/pboot:list}
+				</ul>
+			</div>
+		</div>
+
+		<!--服务指南
+		<div class="item col2">
+			<div class="itemTit">
+				<h3>服务指南</h3>
+				<a href="#" class="itemMore">MORE+</a>
+			</div>
+			<div class="itemCon guide">
+				<ul class="listStyle">
+					<li class="clearfix">
+						<a href="#">大型仪器设备使用预约流程</a>
+						<span>06-18</span>
+					</li>
+					<li class="clearfix">
+						<a href="#">开放实验室使用申请审批流程</a>
+						<span>06-18</span>
+					</li>
+					<li class="clearfix">
+						<a href="#">教学使用教科中心大型设备申请流程</a>
+						<span>06-18</span>
+					</li>
+					<li class="clearfix">
+						<a href="#">计算机实验室使用申请流程</a>
+						<span>06-18</span>
+					</li>
+					<li class="clearfix">
+						<a href="#">教科中心参观申请流程</a>
+						<span>06-18</span>
+					</li>
+					<li class="clearfix">
+						<a href="#">开放实验室使用申请审批流程</a>
+						<span>06-18</span>
+					</li>
+				</ul>
+			</div>
+		</div>-->
+	</div>
+
+	<div class="container clearfix">
+		<!--友情链接
+		<div class="item col6">
+			<div class="itemTit">
+				<h3>友情链接</h3>
+				<a href="#" class="itemMore">MORE+</a>
+			</div>
+			<div class="itemCon link clearfix">
+				<a href="http://www.bootstrapmb.com/"><img src="images/linklogo1.png"></a>
+				<a href="#"><img src="images/linklogo2.png"></a>
+				<a href="#"><img src="images/linklogo3.png"></a>
+				<a href="#"><img src="images/linklogo4.png"></a>
+				<a href="#"><img src="images/linklogo5.png"></a>
+				<a href="#"><img src="images/linklogo6.png"></a>
+			</div>
+		</div>-->
+	</div>
+</div>
+<!--main End!-->
+<script type="text/javascript">
+	$(function(){
+
+		//动态新闻焦点图片
+		var focus = $('.focus');
+		var focusLi = $('.focus').find('li');
+		var fCount = focusLi.length;
+		var fNum = 0;
+		var timer = null;
+
+		for(var i=0;i<fCount;i++){
+			var dot = '<span></span>';
+			$('.dots').append(dot);
+		}
+		function focusMove(){
+			focusLi.eq(fNum).fadeIn().siblings().fadeOut();
+			$('.dots').find('span').eq(fNum).addClass('active').siblings().removeClass('active');
+		}
+		focusMove();
+		$('.dots').on('click','span',function(){
+			fNum = $(this).index();
+			focusMove();
+		});
+		timer = setInterval(function(){
+			fNum++;
+			fNum%= fCount;
+			focusMove();
+		},5000);
+
+
+		//仪器设备图片切换
+		var equ = $('.equipment');
+		var equUl = equ.find('ul');
+		var equLi = equUl.find('li');
+		var equCount = equLi.length;
+		var equPrev = $('.equPrev');
+		var equNext = $('.equNext');
+		var equMax = 5;
+		var space = 236;
+		var equNum = 0;
+
+		equUl.width(space*equCount);
+		if(equCount>equMax){
+			equNext.show();
+		}
+		function equMove(){
+			if(!equUl.is(':animated')){
+				equUl.animate({left:-space*equNum},400);
+			}
+		}
+		equNext.on('click',function(){
+			if(equNum==equCount-equMax){
+				equNext.hide();
+				return false;
+			}else{
+				equNum++;
+			}
+			equMove();
+			equPrev.show();
+		});
+		equPrev.on('click',function(){
+			if(equNum==0){
+				equPrev.hide();
+				return false;
+			}else{
+				equNum--;
+			}
+			equMove();
+			equNext.show();
+		});
+	});
+</script>
+{include file=comm/foot.html}

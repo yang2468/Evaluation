@@ -1,0 +1,271 @@
+{include file='common/head.html'}
+
+<div class="layui-body">
+	{if([$list])}
+	<div class="layui-tab layui-tab-brief" lay-filter="tab">
+		<ul class="layui-tab-title">
+			<li class="layui-this" lay-id="t1">审核评分</li>
+			<!-- <li lay-id="t2">菜单新增</li> -->
+		</ul>
+		<div class="layui-tab-content">
+			<div class="layui-tab-item layui-show">
+				<form action="{url./admin/TestRecord/index}" method="get" class="layui-form">
+					<div class="layui-form-item nospace">
+						<div class="layui-row">
+						<div class="layui-input-inline">
+						  {$pathinfo}
+					  <select name="pcode" onchange="changeType(this.options[this.options.selectedIndex].value)";>
+						<option value="" {if( get('pcode') == '')} selected{/if}>所有项目</option>
+						{foreach $checktypelist(key,value)}
+						<option value="[value->Id]" {if(get('pcode')==$value->Id)}selected {/if} >[value->name]</option>
+						{/foreach}
+						   <!--<option value="ucode" {if(get('field')=='ucode')}selected="selected" {/if} >用户编码</option>
+						   <option value="username" {if(get('field')=='username')}selected="selected" {/if}>用户名</option>-->
+					  </select>
+				   </div>
+				
+				
+				   <div class="layui-input-block">
+					   
+					<input type="radio" name="pstatus" lay-filter="like" title="所有状态" value="" {if( get('pstatus') == '')} checked{/if}>
+					<input type="radio" name="pstatus" lay-filter="like" title="报名审核" value="1" {if(get('pstatus')==1)} checked {/if}>
+					<input type="radio" name="pstatus" lay-filter="like" title="报名通过" value="2" {if(get('pstatus')==2)} checked {/if}>
+					<input type="radio" name="pstatus" lay-filter="like" title="报名不通过" value="3" {if(get('pstatus')==3)} checked {/if}>
+					<input type="radio" name="pstatus" lay-filter="like" title="评估中" value="4" {if(get('pstatus')==4)} checked {/if}>
+					<input type="radio" name="pstatus" lay-filter="like" title="评估完成" value="5" {if(get('pstatus')==5)} checked {/if}>
+				  </div>
+				</div>
+				   <!--<div class="layui-input-inline">
+					{$pathinfo}
+					
+				<select name="pstatus" onchange="changeType(this.options[this.options.selectedIndex].value)";>
+				  <option value="" {if( get('pstatus') == '')} selected{/if}>状态</option>
+				  
+				  <option value="1" {if(get('pstatus')==1)}selected {/if} >报名审核</option>
+				  <option value="2" {if(get('pstatus')==2)}selected {/if} >报名通过</option>
+				  <option value="3" {if(get('pstatus')==3)}selected {/if} >报名不通过</option>
+				  <option value="4" {if(get('pstatus')==4)}selected {/if} >评估中</option>
+				  <option value="5" {if(get('pstatus')==5)}selected {/if} >评估完成</option>
+				  
+					 <option value="ucode" {if(get('field')=='ucode')}selected="selected" {/if} >用户编码</option>
+					 <option value="username" {if(get('field')=='username')}selected="selected" {/if}>用户名</option>
+				</select>
+			 </div>-->
+					<div class="layui-input-inline">
+						<button class="layui-btn" lay-submit>搜索</button>
+						
+					</div>
+			   </div>
+			  
+		   </form>
+
+				<table class="layui-table" id="menuTable">
+					<thead>
+						<tr>
+							
+							<th>评测编号</th>
+							<th>项目名称</th>
+							<th>产品名称</th>
+							<!-- <th>产品简介</th> -->
+							<th>企业名称</th>
+							<th>联系人</th>
+							
+							<th>联系电话</th>
+							<th>项目负责人</th>
+							<th>状态</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						{foreach $dicts(key,value)}
+						<tr>
+							<td>[value->Id]</td>
+							<td>[value->typename]</td>
+							<td>[value->productname]</td>
+							<!-- <td>[value->productbrife]</td> -->
+							<td>[value->companyname]</td>
+							<td>[value->name]</td>
+							
+							<td>[value->phonenum]</td>
+							<td>[value->username]</td>
+							<td>
+								<?php
+								$t=$value->state;
+								if ($t == "1") {
+									echo "报名审核";
+								} elseif ($t == "2") {
+									echo "报名通过";
+								} elseif ($t == "3") {
+									echo "报名不通过";
+								} elseif ($t == "4") {
+									echo "评估中";
+								} else {
+									echo "评估完成";
+								}
+								?>
+							</td>
+							<td>
+								{fun=get_btn_mod($value->Id,'Id','审核')}
+								<!-- <a href="/admin.php?p=/TestRecord/mod/Id/1&amp;backurl=L2FkbWluLnBocD9wPS9UZXN0UmVjb3JkL2luZGV4" class="layui-btn layui-btn-xs">修改</a>
+								<a target="_blank" href='./?showfirstsubmit/[value->Id]' class="layui-btn layui-btn-xs" class="layui-btn">查看信息</a>
+								<a target="_blank" href='./?showsecondsubmit/[value->Id]' class="layui-btn layui-btn-xs" class="layui-btn">查看材料</a> -->
+								{fun=get_btn_score($value->Id,'Id')}
+							</td>
+						</tr>
+						{/foreach}
+					</tbody>
+				</table>
+				<div class="page">{$pagebar}</div>
+			</div>
+			<div class="layui-tab-item">
+				<form action="{url./admin/TestRecord/add}" method="post" class="layui-form">
+					<input type="hidden" name="formcheck" value="{$formcheck}">
+				</form>
+			</div>
+		</div>
+	</div>
+	<script>
+		
+	</script>
+	{/if}
+  {if([$score])}
+  <div class="layui-tab layui-tab-brief" lay-filter="tab">
+		<ul class="layui-tab-title">
+			<li class="layui-this">评分</li>
+		</ul>
+		<div class="layui-tab-content">
+			<div class="layui-tab-item layui-show">
+				
+				<form action="{url./admin/TestRecord/score}" method="post" id="scoreForm" name="scoreForm">
+					<input type="hidden" name="formcheck" value="{$formcheck}" > 
+					<table class="layui-table" id="">
+						<thead>
+						<tr>
+							<th>一级指标</th>
+							<th>二级指标</th>
+							<th>用户材料</th>
+							<!-- <th>产品简介</th> -->
+							<th>评分</th>
+							<!--<th>评测人</th> -->
+							
+						</tr>
+					</thead>
+						<tbody>
+							
+									{foreach $typelist(key,value)}
+									
+										{foreach $value->sonArray(sonkey,son)}
+											<tr >
+												<input type="hidden" name="listall[]" value="<?php echo($son->content->Id);?>">
+											{if($sonkey==0)}
+										   <td rowspan="<?php echo count($value->sonArray);?>">[value->name]</td>
+										   {/if}
+										   <td>[son->name]</td>
+										   <td>
+										   {if($son->type==1)}
+												   <!--<?php echo($son->content->content);?>-->
+												   <a href="#" onclick="setTop('<?php echo($son->content->content);?>')")>查看</a>
+												  
+										   {else}
+										   		<a href="<?php echo($son->content->content);?>">查看附件</a>
+										   {/if}
+										   </td>
+										   <td><input class="layui-input" type="text" name="score[]" value="<?php echo($son->content->score);?>"></input></td>
+										   <!--<td><input class="layui-input" type="text" name="scoreuser[]" value="<?php echo($son->content->scoreuser);?>"></input></td>-->
+										   
+										   
+									   
+										{/foreach}
+									</tr>
+										
+									{/foreach}
+							
+						</tbody>
+						
+					</table>
+					<button type="submit" name="submit" value="saveScore" class="layui-btn">保存评分</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	<script>
+		
+  
+  //触发事件
+  
+    function setTop(msg)
+	{	
+		layer.alert(msg);
+	}
+	
+    
+	</script>
+  
+  {/if}
+	{if([$mod])}
+
+	<div class="layui-tab layui-tab-brief" lay-filter="tab">
+		<ul class="layui-tab-title">
+			<li class="layui-this">测评审批</li>
+		</ul>
+		<div class="layui-tab-content">
+			<div class="layui-tab-item layui-show">
+				<form action="{url./admin/TestRecord/mod/Id/'.[$get.Id].'}{$backurl}" method="post" class="layui-form">
+					<input type="hidden" name="formcheck" value="{$formcheck}">
+					<div class="layui-form-item">
+						<label class="layui-form-label">项目名称</label>
+						<div class="layui-input-block">
+							<select name="typeid">
+								{foreach $checktypelist(key,value)}
+								<option value="[value->Id]" {if($value->Id==[$dict->typeid])}selected{/if}>[value->name]</option>
+								{/foreach}
+							</select>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">项目负责人</label>
+						<div class="layui-input-block">
+							<select name="scoreuser">
+								{foreach $userlist(key,value)}
+								<option value="[value->ucode]" {if($value->ucode==[$dict->scoreuser])}selected{/if}>[value->username]</option>
+								{/foreach}
+							</select>
+						</div>
+					</div>
+
+					<div class="layui-form-item">
+						<label class="layui-form-label">状态</label>
+						<div class="layui-input-block">
+							<input type="radio" name="state" value="1" title="待审核" {if([$dict->state]==1)}checked{/if}>
+							<input type="radio" name="state" value="2" title="初审通过" {if([$dict->state]==2)}checked{/if}>
+							<input type="radio" name="state" value="3" title="初审不通过"
+								{if([$dict->state]==3)}checked{/if}>
+							<input type="radio" name="state" value="4" title="评估中" {if([$dict->state]==4)}checked{/if}>
+							<input type="radio" name="state" value="5" title="评估完成" {if([$dict->state]==5)}checked{/if}>
+						</div>
+					</div>
+
+					<div class="layui-form-item">
+						<label class="layui-form-label">审核意见</label>
+						<div class="layui-input-block">
+							<textarea  type="text" name="connect" required lay-verify="required" value="{$dict->connect}"
+								placeholder="请输入评审意见。" class="layui-textarea">{$dict->connect}</textarea>
+						</div>
+					</div>
+
+					<div class="layui-form-item">
+						<div class="layui-input-block">
+							<button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+							<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+							{fun=get_btn_back()}
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	{/if}
+
+</div>
+
+{include file='common/foot.html'}
